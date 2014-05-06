@@ -7,8 +7,8 @@ cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
 routes = require("./routes/index")
 app = express()
-app.set "port", process.env.PORT or 3000
 
+app.set "port", process.env.PORT or 3000
 
 # view engine setup
 app.set "views", path.join(__dirname, "views")
