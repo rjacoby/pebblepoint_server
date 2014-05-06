@@ -24,9 +24,13 @@ router.get "/", (req, res) ->
 # GET to a slide direction
 router.get "/go/:direction", (req, res) ->
   direction = req.params.direction
-  goToSlide(direction)
-  res.render "index",
-    title: "PowerPoint Server #{direction} SLIDE"
-  return
+  if direction in ['next', 'previous', 'first', 'last']
+    goToSlide(direction)
+    res.render "index",
+      title: "PowerPoint Server #{direction} SLIDE"
+    return
+  else
+    console.error("Invalid parameter: #{direction}")
+    res.send(400, 'Invalid parameters');
 
 module.exports = router
