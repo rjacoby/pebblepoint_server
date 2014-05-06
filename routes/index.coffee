@@ -21,13 +21,12 @@ router.get "/", (req, res) ->
 
   return
 
-# GET next slide.
-router.get "/next", (req, res) ->
-  goToSlide('next')
-    
+# GET to a slide direction
+router.get "/go/:direction", (req, res) ->
+  direction = req.params.direction
+  goToSlide(direction)
   res.render "index",
-    title: "PowerPoint Server NEXT SLIDE"
-
+    title: "PowerPoint Server #{direction} SLIDE"
   return
 
 module.exports = router
