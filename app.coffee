@@ -10,6 +10,8 @@ app = express()
 
 app.set "port", process.env.PORT or 3000
 
+app.use(require("connect-assets")())
+
 # view engine setup
 app.set "views", path.join(__dirname, "views")
 app.set "view engine", "jade"
@@ -18,7 +20,7 @@ app.use logger("dev")
 app.use bodyParser.json()
 app.use bodyParser.urlencoded()
 app.use cookieParser()
-app.use require("less-middleware")(src: path.join(__dirname, "public"))
+# app.use require("less-middleware")(src: path.join(__dirname, "public"))
 app.use express.static(path.join(__dirname, "public"))
 app.use "/", routes
 

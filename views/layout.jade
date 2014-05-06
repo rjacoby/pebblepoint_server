@@ -5,11 +5,13 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     title= title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    != css('bootstrap.min')
+    != css('bootstrap-theme.min')
+    != css('style')
+
   body(role="document")
     block content
 
-    //- script(src='/javascripts/jquery.min.js')
-    //- script(src='/javascripts/bootstrap.min.js')
+    != js('jquery.min')
+    != js('bootstrap.min')
+    != js('ppt')
