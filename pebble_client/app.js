@@ -5,9 +5,16 @@ simply.fullscreen(true);
 // simply.settingsUrl = "http://dl.dropboxusercontent.com/u/115264/pebble/ppt/config.html";
 
 var sendPptCmd = function(cmd) {
-  ajax({ method: 'post', url: 'http://ppt-server.dev.calm.ly/go/' + cmd },
-    function(data){
-      simply.body('Went to: ' + cmd);
+  ajax({ method: 'post', url: 'http://ppt-server.dev.calm.ly/go/' + cmd,
+         type: 'json'}, function(data){
+      console.log(data);
+      console.log(data.success);
+      if (data.success){
+        console.log('succeeded');
+        simply.body('Went to: ' + data.pageNumber);
+      } else {
+        simply.body('FAILED to navigate!');
+      }
     });
 };
 
