@@ -1,6 +1,9 @@
+foo = ''
 $(document).on 'click', '.ppt-button', (evt) ->
   path = $(@).data('url')
-  console.log(path)
   $.post path, (data) ->
-    # $('body').append "Successfully got the page."
-    console.log("Navigated!")
+    console.log(data)
+    if data.success
+      flash = $('#flash')
+      flash.html(data.pageNumber)
+      flash.slideDown()

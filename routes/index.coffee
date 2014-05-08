@@ -26,8 +26,7 @@ router.post "/go/:direction", (req, res) ->
   direction = req.params.direction
   if direction in ['next', 'previous', 'first', 'last']
     goToSlide(direction)
-    res.render "index",
-      title: "PowerPoint Server #{direction} SLIDE"
+    res.json({success: true, pageNumber: direction})
     return
   else
     console.error("Invalid parameter: #{direction}")
