@@ -22,7 +22,7 @@ router.get "/", (req, res) ->
   return
 
 # GET to a slide direction
-router.get "/go/:direction", (req, res) ->
+router.post "/go/:direction", (req, res) ->
   direction = req.params.direction
   if direction in ['next', 'previous', 'first', 'last']
     goToSlide(direction)
