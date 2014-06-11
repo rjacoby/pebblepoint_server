@@ -7,15 +7,11 @@
   },
   "dependencies": {
     "express": "~4.0.0",
-    "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
-    "jade": "~1.3.0",
     "applescript": "^0.2.1",
-    "coffee-script": "^1.7.1",
-    "connect-assets": "^3.0.0-beta2",
-    "less": "^1.7.0"
+    "coffee-script": "^1.7.1"
   }
 }
