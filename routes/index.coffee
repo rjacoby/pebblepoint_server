@@ -1,6 +1,8 @@
 express = require("express")
 router = express.Router()
 applescript = require("applescript")
+os = require("os")
+networkInterfaces = os.networkInterfaces()
 
 # Navigation functions
 goToSlide = (direction) ->
@@ -14,11 +16,23 @@ goToSlide = (direction) ->
     console.log err  if err
     return
 
+publicIP = () ->
+  ips = []
+  for interfaceName, inetList of networkInterfaces
+    for inet in inetList
+      # Not using a hash b/c we care about order as our priority.
+      if !inet["internal"] && inet["family"].match(/IPv4/i)
+        ips.push [interfaceName, inet["address"]]
+
+  return ips
+
 # GET home page.
 router.get "/", (req, res) ->
-  res.render "index",
-    title: "PowerPoint Server"
-
+  res.json({
+    success: true,
+    text: "Enter #{req.protocol}://#{req.get('host')}/} into your prefs",
+    ifconfig: publicIP()
+  })
   return
 
 # GET to a slide direction
@@ -30,6 +44,6 @@ router.post "/go/:direction", (req, res) ->
     return
   else
     console.error("Invalid parameter: #{direction}")
-    res.send(400, 'Invalid parameters');
+    res.send(400, 'Invalid parameters')
 
 module.exports = router
