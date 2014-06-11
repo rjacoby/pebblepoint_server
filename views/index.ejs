@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PebblePoint Server</title>
+  </head>
+  <body>
+    <div >
+      <div class="jumbotron hidden-xs">
+        <h1>Preferred IP: <%= preferredIP %></h1>
+        <p>Use  to control your presentation</p>
+      </div>
+      <div class="page-header">
+        <h1>Controls</h1>
+      </div>
+      <div class="btn-group">
+        <button type="button" data-url="/go/previous" class="btn btn-lg btn-info ppt-button">Prev</button>
+        <button type="button" data-url="/go/next" class="btn btn-lg btn-primary ppt-button">Next</button>
+      </div>
+    </div>
+  </body>
+</html>

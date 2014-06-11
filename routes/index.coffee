@@ -28,11 +28,14 @@ publicIP = () ->
 
 # GET home page.
 router.get "/", (req, res) ->
-  res.json({
-    success: true,
-    text: "Enter #{req.protocol}://#{req.get('host')}/} into your prefs",
-    ifconfig: publicIP()
-  })
+  preferredIP = publicIP()[0][1]
+  res.render "index",
+    preferredIP: preferredIP
+  # res.json({
+  #   success: true,
+  #   text: "Enter #{req.protocol}://#{preferredIP}/} into your prefs",
+  #   ifconfig: publicIP()
+  # })
   return
 
 # GET to a slide direction
