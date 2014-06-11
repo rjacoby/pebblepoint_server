@@ -7,7 +7,9 @@ bodyParser = require("body-parser")
 routes = require("./routes/index")
 app = express()
 
-app.set "port", process.env.PORT or 3000
+global.app = app
+
+app.set "port", process.env.PORT or 7325
 
 # view engine setup
 app.set "views", path.join(__dirname, "views")
@@ -53,6 +55,6 @@ app.use (err, req, res, next) ->
 
 
 server = app.listen(app.get("port"), ->
-  debug "Express server listening on port " + server.address().port
+  console.log "PebblePoint server listening on port " + server.address().port
   return
 )

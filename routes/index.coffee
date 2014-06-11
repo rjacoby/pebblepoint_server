@@ -29,8 +29,9 @@ publicIP = () ->
 # GET home page.
 router.get "/", (req, res) ->
   preferredIP = publicIP()[0][1]
+  port = global.app.get("port")
   res.render "index",
-    preferredIP: preferredIP
+    preferredIP: "#{preferredIP}:#{port}"
   # res.json({
   #   success: true,
   #   text: "Enter #{req.protocol}://#{preferredIP}/} into your prefs",
