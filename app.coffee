@@ -1,7 +1,6 @@
 debug = require("debug")("ppt-server")
 express = require("express")
 path = require("path")
-favicon = require("static-favicon")
 logger = require("morgan")
 cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
@@ -10,12 +9,8 @@ app = express()
 
 app.set "port", process.env.PORT or 3000
 
-app.use(require("connect-assets")())
-
 # view engine setup
 app.set "views", path.join(__dirname, "views")
-app.set "view engine", "jade"
-app.use favicon()
 app.use logger("dev")
 app.use bodyParser.json()
 app.use bodyParser.urlencoded()
@@ -46,7 +41,7 @@ if app.get("env") is "development"
 
 
 # production error handler
-# no stacktraces leaked to user
+# no stacktraces leaked to users
 app.use (err, req, res, next) ->
   res.status err.status or 500
   res.render "error",
