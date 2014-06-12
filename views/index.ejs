@@ -13,7 +13,11 @@
         <p>
           Preferred IP: <%= preferredIP %>
         </p>
-        <p>Use  to control your presentation</p>
+      </div>
+      <div>
+        <% otherIPs.forEach(function(el, index) {%>
+          <%= el[1] %>
+        <%});%>
       </div>
       <div class="page-header">
         <h1>Controls</h1>
