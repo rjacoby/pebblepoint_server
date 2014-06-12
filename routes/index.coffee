@@ -28,15 +28,12 @@ publicIP = () ->
 
 # GET home page.
 router.get "/", (req, res) ->
-  preferredIP = publicIP()[0][1]
+  ips = publicIP()
+  preferredIP = ips.splice(0,1)[0][1]
   port = global.app.get("port")
   res.render "index",
-    preferredIP: "#{preferredIP}:#{port}"
-  # res.json({
-  #   success: true,
-  #   text: "Enter #{req.protocol}://#{preferredIP}/} into your prefs",
-  #   ifconfig: publicIP()
-  # })
+    preferredIP: "#{preferredIP}:#{port}",
+    otherIPs: ips
   return
 
 # GET to a slide direction

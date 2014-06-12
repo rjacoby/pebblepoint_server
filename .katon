@@ -1,1 +1,1 @@
-coffee ./app.coffee
+node ./app.coffee
