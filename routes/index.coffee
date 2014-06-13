@@ -1,8 +1,6 @@
 express = require("express")
 router = express.Router()
 applescript = require("applescript")
-os = require("os")
-networkInterfaces = os.networkInterfaces()
 
 # Navigation functions
 goToSlide = (direction) ->
@@ -16,18 +14,11 @@ goToSlide = (direction) ->
     console.log err  if err
     return
 
-publicIP = () ->
-  ips = []
-  for interfaceName, inetList of networkInterfaces
-    for inet in inetList
-      # Not using a hash b/c we care about order as our priority.
-      if !inet["internal"] && inet["family"].match(/IPv4/i) && !interfaceName.match(/bridge/i)
-        ips.push [interfaceName, inet["address"]]
-  return ips
+
 
 # GET home page.
 router.get "/", (req, res) ->
-  ips = publicIP()
+  ips = global.app.get("ipFunc")()
   preferredIP = ips.splice(0,1)[0][1]
   port = global.app.get("port")
   res.render "index",

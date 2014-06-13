@@ -5,11 +5,23 @@ logger = require("morgan")
 cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
 routes = require("./routes/index")
+os = require("os")
 app = express()
 
 global.app = app
 
 app.set "port", process.env.PORT or 7325
+
+publicIPList = () ->
+  ips = []
+  for interfaceName, inetList of os.networkInterfaces()
+    for inet in inetList
+      # Not using a hash b/c we care about order as our priority.
+      if !inet["internal"] && inet["family"].match(/IPv4/i) && !interfaceName.match(/bridge/i)
+        ips.push [interfaceName, inet["address"]]
+  return ips
+
+app.set "ipFunc", publicIPList
 
 # view engine setup
 app.set "views", path.join(__dirname, "views")
@@ -53,8 +65,8 @@ app.use (err, req, res, next) ->
 
   return
 
-
 server = app.listen(app.get("port"), ->
-  console.log "PebblePoint server listening on port " + server.address().port
+  preferredIP = publicIPList().splice(0,1)[0][1]
+  console.log "PebblePoint server listening on " + preferredIP + ":" + server.address().port
   return
 )
