@@ -8,6 +8,10 @@ routes = require("./routes/index")
 os = require("os")
 app = express()
 
+# For launching the view
+sys = require('sys')
+exec = require('child_process').exec
+
 global.app = app
 
 app.set "port", process.env.PORT or 7325
@@ -67,6 +71,9 @@ app.use (err, req, res, next) ->
 
 server = app.listen(app.get("port"), ->
   preferredIP = publicIPList().splice(0,1)[0][1]
-  console.log "PebblePoint server listening on " + preferredIP + ":" + server.address().port
+  serverUrl = "http://" + preferredIP + ":" + server.address().port
+  console.log "PebblePoint server listening on " + serverUrl
+  exec "open #{serverUrl}"
+
   return
 )
