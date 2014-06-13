@@ -5,22 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PebblePoint Server</title>
+    <style>
+      body {font-family: sans-serif; line-height:2em;};
+    </style>
   </head>
   <body>
     <div >
       <div class="jumbotron hidden-xs">
         <h1>PebblePoint Server</h1>
+        <h3>
+          Setting up PebblePoint
+        </h3>
+
         <p>
-          Preferred IP: <%= preferredIP %>
-        </p>
+          Make sure your Mac and your phone are on the same network.<br />
+          Enter this address into PebblePoint's preferences on your phone:</p>
+        <p style="font-weight: bold; font-size:24px;"><%= preferredIP + ":" + port %></p>
       </div>
-      <div>
-        <% otherIPs.forEach(function(el, index) {%>
-          <%= el[1] %>
-        <%});%>
-      </div>
+      <% if (otherIPs.length > 0 ) { %>
+        <p>If that address doesn't work, try these alternates:</p>
+        <ul>
+          <% otherIPs.forEach(function(el, index) {%>
+            <li>
+              <%= el[1] + ":" + port %>
+            </li>
+          <%});%>
+        </ul>
+      <% }; %>
+      <hr/>
       <div class="page-header">
-        <h1>Controls</h1>
+        <h3>Controls (for testing)</h3>
       </div>
       <div class="btn-group">
         <button type="button" data-url="/go/previous" class="btn btn-lg btn-info ppt-button">Prev</button>
