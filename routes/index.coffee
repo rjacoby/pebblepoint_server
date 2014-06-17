@@ -6,12 +6,23 @@ applescript = require("applescript")
 goToSlide = (direction) ->
   script = """
     tell application "Microsoft PowerPoint"
-      go to #{direction} slide (slide show view of slide show window 1)
+    	set slideWindow to slide show window 1 of active presentation
+    	tell active presentation
+    		set theSlideCount to count slides
+    	end tell
+      set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
+    	go to #{direction} slide (slide show view of slide show window 1)
+    	{currentSlideNumber, theSlideCount}
     end tell
   """
   applescript.execString script, (err, rtn) ->
     # Something went wrong!
-    console.log err  if err
+    if err
+      console.log err
+    else
+      if (Array.isArray(rtn))
+        rtn.forEach (retVal) ->
+          console.log(retVal)
     return
 
 
