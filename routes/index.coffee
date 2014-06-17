@@ -16,14 +16,15 @@ goToSlide = (direction) ->
     end tell
   """
   applescript.execString script, (err, rtn) ->
-    # Something went wrong!
+    retHash = {success: false}
     if err
       console.log err
     else
+      retHash["success"] = true
       if (Array.isArray(rtn))
-        rtn.forEach (retVal) ->
-          console.log(retVal)
-    return
+        retHash["slideIndex"] = rtn[0]
+        retHash["slideTotal"] = rtn[1]
+    return retHash
 
 
 
@@ -42,8 +43,8 @@ router.get "/", (req, res) ->
 router.post "/go/:direction", (req, res) ->
   direction = req.params.direction
   if direction in ['next', 'previous', 'first', 'last']
-    goToSlide(direction)
-    res.json({success: true, pageNumber: direction})
+    pptResult = goToSlide(direction)
+    res.json(pptResult)
     return
   else
     console.error("Invalid parameter: #{direction}")
