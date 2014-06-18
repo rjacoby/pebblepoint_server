@@ -2,31 +2,17 @@ express = require("express")
 router = express.Router()
 applescript = require("applescript")
 
-# Navigation functions
-goToSlide = (direction) ->
-  script = """
-    tell application "Microsoft PowerPoint"
-    	set slideWindow to slide show window 1 of active presentation
-    	tell active presentation
-    		set theSlideCount to count slides
-    	end tell
-      set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
-    	go to #{direction} slide (slide show view of slide show window 1)
-    	{currentSlideNumber, theSlideCount}
-    end tell
-  """
-  applescript.execString script, (err, rtn) ->
-    retHash = {success: false}
-    if err
-      console.log err
-    else
-      retHash["success"] = true
-      if (Array.isArray(rtn))
-        retHash["slideIndex"] = rtn[0]
-        retHash["slideTotal"] = rtn[1]
-    return retHash
-
-
+script = (direction) -> """
+  tell application "Microsoft PowerPoint"
+  	set slideWindow to slide show window 1 of active presentation
+  	tell active presentation
+  		set theSlideCount to count slides
+  	end tell
+    set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
+    go to #{direction} slide (slide show view of slide show window 1)
+  	{currentSlideNumber, theSlideCount}
+  end tell
+"""
 
 # GET home page.
 router.get "/", (req, res) ->
@@ -43,9 +29,19 @@ router.get "/", (req, res) ->
 router.post "/go/:direction", (req, res) ->
   direction = req.params.direction
   if direction in ['next', 'previous', 'first', 'last']
-    pptResult = goToSlide(direction)
-    res.json(pptResult)
-    return
+    pptResult = {success: false}
+    applescript.execString script(direction), (err, rtn) ->
+      if err
+        console.log err
+      else
+        pptResult["success"] = true
+        if (Array.isArray(rtn))
+          pptResult["slideIndex"] = rtn[0]
+          pptResult["slideTotal"] = rtn[1]
+      #  Had to put the JSON building inside the AppleScript call b/c the
+      # library we're using uses a 'spawn' call and so we end up async
+      # and without shared scope
+      res.json(pptResult)
   else
     console.error("Invalid parameter: #{direction}")
     res.send(400, 'Invalid parameters')
