@@ -32,13 +32,17 @@ router.post "/go/:direction", (req, res) ->
     pptResult = {success: false}
     applescript.execString script(direction), (err, rtn) ->
       if err
-        console.log err
+        console.log "Could not control PowerPoint with AppleScript:", err.message
+        if err.message.match(/1728/)
+          pptResult["errorMessage"] = "Check that presentation is playing"
+        else
+          pptResult["errorMessage"] = err.message
       else
         pptResult["success"] = true
         if (Array.isArray(rtn))
           pptResult["slideIndex"] = rtn[0]
           pptResult["slideTotal"] = rtn[1]
-      #  Had to put the JSON building inside the AppleScript call b/c the
+      # Had to put the JSON building inside the AppleScript call b/c the
       # library we're using uses a 'spawn' call and so we end up async
       # and without shared scope
       res.json(pptResult)
