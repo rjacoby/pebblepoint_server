@@ -1,8 +1,6 @@
-debug = require("debug")("ppt-server")
 express = require("express")
 path = require("path")
 logger = require("morgan")
-cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
 routes = require("./routes/index")
 os = require("os")
@@ -33,7 +31,6 @@ app.set "view engine", "ejs"
 app.use logger("dev")
 app.use bodyParser.json()
 app.use bodyParser.urlencoded()
-app.use cookieParser()
 app.use express.static(path.join(__dirname, "public"))
 app.use "/", routes
 
