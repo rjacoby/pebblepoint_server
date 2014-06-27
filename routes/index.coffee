@@ -7,9 +7,9 @@ script = (direction) -> """
   	set slideWindow to slide show window 1 of active presentation
   	tell active presentation
   		set theSlideCount to count slides
-  	end tell
-    set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
+    end tell
     go to #{direction} slide (slide show view of slide show window 1)
+    set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
   	{currentSlideNumber, theSlideCount}
   end tell
 """
