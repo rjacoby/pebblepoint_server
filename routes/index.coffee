@@ -2,14 +2,17 @@ express = require("express")
 router = express.Router()
 applescript = require("applescript")
 
-script = (direction) -> """
+script = (command) -> """
   tell application "Microsoft PowerPoint"
   	set slideWindow to slide show window 1 of active presentation
   	tell active presentation
   		set theSlideCount to count slides
     end tell
-    go to #{direction} slide (slide show view of slide show window 1)
     set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
+    if (("#{command}" = "next") and (currentSlideNumber < theSlideCount)) or (("#{command}" = "previous") and currentSlideNumber > 1) or ("#{command}" = "first") or ("#{command}" = "last")then
+      go to #{command} slide (slide show view of slide show window 1)
+      set currentSlideNumber to slide index of slide of (slide show view of slideWindow)
+    end if
   	{currentSlideNumber, theSlideCount}
   end tell
 """
@@ -25,12 +28,12 @@ router.get "/", (req, res) ->
     otherIPs: ips
   return
 
-# GET to a slide direction
-router.post "/go/:direction", (req, res) ->
-  direction = req.params.direction
-  if direction in ['next', 'previous', 'first', 'last']
+# POST to go to a slide
+router.post "/go/:command", (req, res) ->
+  command = req.params.command
+  if command in ['next', 'previous', 'first', 'last']
     pptResult = {success: false}
-    applescript.execString script(direction), (err, rtn) ->
+    applescript.execString script(command), (err, rtn) ->
       if err
         console.log "Could not control PowerPoint with AppleScript:", err.message
         if err.message.match(/1728/)
@@ -47,7 +50,7 @@ router.post "/go/:direction", (req, res) ->
       # and without shared scope
       res.json(pptResult)
   else
-    console.error("Invalid parameter: #{direction}")
+    console.error("Invalid parameter: #{command}")
     res.send(400, 'Invalid parameters')
 
 module.exports = router
