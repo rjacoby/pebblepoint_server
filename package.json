@@ -1,7 +1,26 @@
 {
   "name": "pebblepoint-server",
   "version": "0.3.0",
-  "private": true,
+  "description": "Server to allow PebblePoint to control PowerPoint on OS X",
+  "keywords": ["pebble", "PowerPoint", "presentation", "presenter", "slides", "Mac", "OS X"],
+  "homepage": "https://github.com/rjacoby/pebblepoint_server/",
+  "bugs": {
+    "url": "https://github.com/rjacoby/pebblepoint_server/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/rjacoby/pebblepoint_server/master/LICENSE-MIT"
+    }
+  ],
+  "author": {
+    "name": "Rafi Jacoby",
+    "email": "rafijacoby@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rjacoby/pebblepoint_server.git"
+  },
   "scripts": {
     "start": "node ./app.coffee"
   },
@@ -13,5 +32,10 @@
     "ejs": "^1.0.0",
     "express": "~4.0.0",
     "morgan": "~1.0.0"
-  }
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "os": ["darwin"],
+  "preferGlobal": true
 }
