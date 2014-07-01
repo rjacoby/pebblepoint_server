@@ -2,6 +2,7 @@ express = require("express")
 router = express.Router()
 applescript = require("applescript")
 
+# This AppleScript is really the core of the whole shebang.
 script = (command) -> """
   tell application "Microsoft PowerPoint"
   	set slideWindow to slide show window 1 of active presentation
