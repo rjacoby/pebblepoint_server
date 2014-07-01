@@ -9,7 +9,6 @@
     "applescript": "^0.2.1",
     "body-parser": "~1.0.0",
     "coffee-script": "^1.7.1",
-    "cookie-parser": "~1.0.1",
     "debug": "^1.0.2",
     "ejs": "^1.0.0",
     "express": "~4.0.0",
