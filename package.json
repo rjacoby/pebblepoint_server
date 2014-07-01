@@ -17,6 +17,9 @@
     "name": "Rafi Jacoby",
     "email": "rafijacoby@gmail.com"
   },
+  "bin": {
+    "pebblepoint-server": "./cli.sh"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:rjacoby/pebblepoint_server.git"
