@@ -18,28 +18,21 @@
         </h3>
 
         <p>
-          Make sure your Mac and your phone are on the same network.<br />
-          Enter this address into PebblePoint's preferences on your phone:</p>
-        <p style="font-weight: bold; font-size:24px;"><%= preferredIP + ":" + port %></p>
+          Make sure your Mac and your phone are on the same network.<br/>
+          Enter these values into PebblePoint's preferences on your phone:</p>
+        <p style="font-weight: bold; font-size:24px;">Server IP Address: <%= preferredIP %></p>
+        <p style="font-weight: bold; font-size:24px;">Port: <%= port %></p>
       </div>
       <% if (otherIPs.length > 0 ) { %>
-        <p>If that address doesn't work, try these alternates:</p>
+        <p>If that IP address doesn't work, try these alternates:</p>
         <ul>
           <% otherIPs.forEach(function(el, index) {%>
             <li>
-              <%= el[1] + ":" + port %>
+              <%= el[1] %>
             </li>
           <%});%>
         </ul>
       <% }; %>
-      <hr/>
-      <div class="page-header">
-        <h3>Controls (for testing)</h3>
-      </div>
-      <div class="btn-group">
-        <button type="button" data-url="/go/previous" class="btn btn-lg btn-info ppt-button">Prev</button>
-        <button type="button" data-url="/go/next" class="btn btn-lg btn-primary ppt-button">Next</button>
-      </div>
     </div>
   </body>
 </html>
