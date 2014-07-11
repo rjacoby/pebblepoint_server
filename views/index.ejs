@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
     <title>PebblePoint Server</title>
-    <style>
-      body {font-family: sans-serif; line-height:2em;};
-    </style>
   </head>
   <body>
-    <div >
-      <div class="jumbotron hidden-xs">
-        <h1>PebblePoint Server</h1>
-        <h3>
-          Setting up PebblePoint
-        </h3>
-
-        <p>
-          Make sure your Mac and your phone are on the same network.<br/>
-          Enter these values into PebblePoint's preferences on your phone:</p>
-        <p style="font-weight: bold; font-size:24px;">Server IP Address: <%= preferredIP %></p>
-        <p style="font-weight: bold; font-size:24px;">Port: <%= port %></p>
+    <div class="container">
+      <div class="page-header">
+        <h1>PebblePoint Server <small class="alert alert-success">Running: <span class="glyphicon glyphicon-ok"></span></small></h1>
       </div>
+      <h2>
+        Configuring Your Pebble
+      </h2>
+      <ol class="lead">
+        <li>Make sure your Mac and your phone are on the same network</li>
+        <li>Install PebblePoint from Pebble app store</li>
+        <li>In Pebble app on your phone, go to "My Pebble"</li>
+        <li>Select "Settings" on the PebblePoint app</li>
+        <li>Enter these values
+          <dl>
+            <dt>Server IP Address</dt><dd><%= preferredIP %></dd>
+            <dt>Port</dt><dd><%= port %></dd>
+            </dl>
+        </li>
+      </ol>
+
       <% if (otherIPs.length > 0 ) { %>
-        <p>If that IP address doesn't work, try these alternates:</p>
+        <p>If server IP address doesn't work, try these alternates</p>
         <ul>
           <% otherIPs.forEach(function(el, index) {%>
             <li>
