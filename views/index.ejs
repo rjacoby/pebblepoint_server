@@ -10,7 +10,13 @@
   <body>
     <div class="container">
       <div class="page-header">
-        <h1>PebblePoint Server <small class="alert alert-success">Running: <span class="glyphicon glyphicon-ok"></span></small></h1>
+        <h1 class="row"><div class="col-md-5">PebblePoint Server</div><div class="col-md-4"><small class="alert">Running: <span class="alert-success glyphicon glyphicon-ok"></span></small></div></h1>
+        <h1 class="row"><div class="col-md-5">Microsoft PowerPoint</div><div class="col-md-4"><small class="alert">Running: <% if (powerPointStatus =='true') {%>
+          <span class="alert-success glyphicon glyphicon-ok"></span>
+        <% } else { %>
+          <span class="alert-danger glyphicon glyphicon-remove"></span>
+        <% } %>
+      </small></div></h1>
       </div>
       <h2>
         Configuring Your Pebble

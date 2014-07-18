@@ -3,7 +3,7 @@ router = express.Router()
 applescript = require("applescript")
 
 # This AppleScript is really the core of the whole shebang.
-script = (command) -> """
+command_script = (command) -> """
   tell application "Microsoft PowerPoint"
   	set slideWindow to slide show window 1 of active presentation
   	tell active presentation
@@ -18,15 +18,28 @@ script = (command) -> """
   end tell
 """
 
+ppt_status_script = -> """
+  tell application "Microsoft PowerPoint"
+    if it is running then
+      return true
+    else
+      return false
+    end if
+  end tell
+"""
+
 # GET home page.
 router.get "/", (req, res) ->
   ips = global.app.get("ipFunc")()
   preferredIP = ips.splice(0,1)[0][1]
   port = global.app.get("port")
-  res.render "index",
-    preferredIP: preferredIP,
-    port: port,
-    otherIPs: ips
+  applescript.execString ppt_status_script(), (err, rtn) ->
+    console.log rtn
+    res.render "index",
+      preferredIP: preferredIP,
+      port: port,
+      otherIPs: ips,
+      powerPointStatus: rtn
   return
 
 # POST to go to a slide
@@ -34,7 +47,7 @@ router.post "/go/:command", (req, res) ->
   command = req.params.command
   if command in ['next', 'previous', 'first', 'last']
     pptResult = {success: false}
-    applescript.execString script(command), (err, rtn) ->
+    applescript.execString command_script(command), (err, rtn) ->
       if err
         console.log "Could not control PowerPoint with AppleScript:", err.message
         if err.message.match(/1728/)
