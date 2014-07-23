@@ -67,10 +67,11 @@ app.use (err, req, res, next) ->
   return
 
 server = app.listen(app.get("port"), ->
-  preferredIP = publicIPList().splice(0,1)[0][1]
-  serverUrl = "http://" + preferredIP + ":" + server.address().port
-  console.log "PebblePoint server listening on " + serverUrl
-  exec "open #{serverUrl}"
-
   return
 )
+
+preferredIP = publicIPList().splice(0,1)[0][1]
+serverUrl = "http://" + preferredIP + ":" + server.address().port
+console.log "PebblePoint server listening on " + serverUrl
+# exec "open #{serverUrl}"
+app.set "serverUrl", serverUrl
