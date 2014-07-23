@@ -1,9 +1,16 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-download-atom-shell');
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-commands');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
-  destRoot = 'binaries/Atom.app/Contents/Resources/app/';
+  atomDownloadRoot = 'binaries/Atom.app';
+  atomRenamedRoot = 'binaries/PebblePointServer.app';
+  destRoot = atomRenamedRoot + '/Contents/Resources/app/';
+
+  grunt.registerTask('build', ['coffee', 'command', 'copy']);
+  grunt.registerTask('download-atom-and-build', ['download-atom-shell', 'build']);
+  grunt.registerTask('default', ['download-atom-and-build']);
 
   grunt.initConfig({
     'download-atom-shell': {
@@ -37,6 +44,11 @@ module.exports = function(grunt) {
             dest: destRoot
           }
         ]
+      }
+    },
+    command : {
+      run_cmd: {
+        cmd  : 'cp -r ' + atomDownloadRoot + '/* ' + atomRenamedRoot
       }
     }
   });
