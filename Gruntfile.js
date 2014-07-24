@@ -1,23 +1,25 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-download-atom-shell');
   grunt.loadNpmTasks('grunt-contrib-coffee');
-  grunt.loadNpmTasks('grunt-contrib-commands');
+  grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
-  atomDownloadRoot = 'binaries/Atom.app';
-  atomRenamedRoot = 'binaries/PebblePointServer.app';
-  atomRenamedContents = atomRenamedRoot + '/Contents/';
-  destRoot = atomRenamedContents + 'Resources/app/';
+  binDir = 'binaries';
+  atomDistrRoot = binDir + '/Atom.app';
+  appName = 'PebblePointServer.app';
+  appRoot = binDir + '/' + appName;
+  appContents = appRoot + '/Contents/';
+  destRoot = appContents + 'Resources/app/';
 
-  grunt.registerTask('build', ['coffee', 'command', 'copy']);
+  grunt.registerTask('build', ['coffee', 'exec:copy_atom_files', 'copy', 'exec:npm_install_bin']);
   grunt.registerTask('download-atom-and-build', ['download-atom-shell', 'build']);
   grunt.registerTask('default', ['download-atom-and-build']);
 
   grunt.initConfig({
     'download-atom-shell': {
       version: '0.14.0',
-      outputDir: 'binaries'
+      outputDir: binDir
     },
 
     coffee: {
@@ -49,21 +51,27 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'osx_contents',
             src: ['Info.plist'],
-            dest: atomRenamedContents
+            dest: appContents
           }
         ]
       }
     },
-    command : {
-      run_cmd: {
-        cmd  : 'cp -r ' + atomDownloadRoot + '/* ' + atomRenamedRoot
+    exec: {
+      copy_atom_files: {
+        cmd: 'ditto ' + atomDistrRoot + ' ' + appRoot
+      },
+      npm_install_bin: {
+        cmd: 'cd ' + destRoot +  '&& npm install --production'
       }
     },
     clean: {
-      build: [atomRenamedRoot],
+      build: {
+        force: true,
+        src:[appRoot]
+      },
       framework:{
         force: true,
-        src: ['binaries']
+        src: [binDir]
       }
     }
   });
