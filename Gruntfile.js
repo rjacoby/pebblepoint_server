@@ -58,6 +58,13 @@ module.exports = function(grunt) {
       run_cmd: {
         cmd  : 'cp -r ' + atomDownloadRoot + '/* ' + atomRenamedRoot
       }
+    },
+    clean: {
+      build: [atomRenamedRoot],
+      framework:{
+        force: true,
+        src: ['binaries']
+      }
     }
   });
 };
