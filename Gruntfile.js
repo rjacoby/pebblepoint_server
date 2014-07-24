@@ -3,10 +3,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-commands');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   atomDownloadRoot = 'binaries/Atom.app';
   atomRenamedRoot = 'binaries/PebblePointServer.app';
-  destRoot = atomRenamedRoot + '/Contents/Resources/app/';
+  atomRenamedContents = atomRenamedRoot + '/Contents/';
+  destRoot = atomRenamedContents + 'Resources/app/';
 
   grunt.registerTask('build', ['coffee', 'command', 'copy']);
   grunt.registerTask('download-atom-and-build', ['download-atom-shell', 'build']);
@@ -42,6 +44,12 @@ module.exports = function(grunt) {
               'routes/index.js'
             ],
             dest: destRoot
+          },
+          {
+            expand: true,
+            cwd: 'osx_contents',
+            src: ['Info.plist'],
+            dest: atomRenamedContents
           }
         ]
       }
