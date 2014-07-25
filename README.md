@@ -5,10 +5,12 @@ Node.js server for Mac OS X that allows Pebble to control PowerPoint, via AppleS
 
 Requirements
 ------------
-- Mac OS X, for AppleScript
+- Mac OS X (this server uses AppleScript to control your presentation)
 - Microsoft PowerPoint
 - [Node.js](http://nodejs.org)
-- A Pebble watch, with PebblePoint installed
+- A Pebble watch, with [PebblePoint](https://apps.getpebble.com/applications/53cec3433967e94f5500000b) installed
+
+If you don't want to run the server through terminal, you can download the standalone [PebblePointServer.app](https://db.tt/nvHQZmPg).
 
 Installation
 ------------
